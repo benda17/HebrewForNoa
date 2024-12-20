@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Hebrew Sentences</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Form Hebrew Sentences 🌟</h1>
+    </header>
+
+    <main>
+        <h2>Drag the words into the correct order!</h2>
+        <div class="sentence-box">
+            <span class="word" draggable="true">הכלב</span>
+            <span class="word" draggable="true">רץ</span>
+            <span class="word" draggable="true">.</span>
+        </div>
+
+        <div class="sentence-box">
+            <div class="drop-zone" ondragover="allowDrop(event)" ondrop="drop(event)">Drop here</div>
+            <div class="drop-zone" ondragover="allowDrop(event)" ondrop="drop(event)">Drop here</div>
+            <div class="drop-zone" ondragover="allowDrop(event)" ondrop="drop(event)">Drop here</div>
+        </div>
+
+        <button onclick="checkSentence()">Check Sentence</button>
+        <p id="feedback"></p>
+        <button onclick="goBack()">⬅️ Back to Home</button>
+    </main>
+
+    <script>
+        function allowDrop(event) {
+            event.preventDefault();
+        }
+
+        function drag(event) {
+            event.dataTransfer.setData("text", event.target.textContent);
+        }
+
+        function drop(event) {
+            event.preventDefault();
+            const data = event.dataTransfer.getData("text");
+            event.target.textContent = data;
+        }
+
+        function checkSentence() {
+            const zones = document.querySelectorAll('.drop-zone');
+            const sentence = Array.from(zones).map(zone => zone.textContent.trim()).join(' ');
+            const correctSentence = "הכלב רץ .";
+
+            const feedback = document.getElementById('feedback');
+            feedback.textContent = sentence === correctSentence ? "Correct! 🌟" : "Try again! 💪";
+        }
+
+        function goBack() {
+            window.location.href = 'index.html';
+        }
+    </script>
+</body>
+</html>

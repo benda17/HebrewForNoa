@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Learning Hebrew Together</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Poppins:wght@400;600&display=swap">
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      position: relative;
+      color: #444;
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('https://i.postimg.cc/VLrvByr9/Whats-App-Image-2024-11-28-at-20-13-51.jpg') no-repeat center center fixed;
+      background-size: cover;
+      opacity: 0.5; /* Make the background image faded */
+      z-index: -1;
+    }
+    .container {
+      text-align: center;
+      padding: 20px;
+    }
+    h1 {
+      font-family: 'Caveat', cursive;
+      color: #ff4081;
+      text-shadow: 1px 1px 4px #ffc0cb;
+      font-size: 2.5rem;
+    }
+    h2 {
+      font-family: 'Assistant';
+      color: #ff4081;
+      text-shadow: 1px 1px 4px #ffc0cb;
+      font-size: 2.5rem;
+    }
+    .cards {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 15px;
+      margin-top: 20px;
+    }
+    .card {
+      background: #fffafc;
+      border: 2px solid #ffb3c1;
+      border-radius: 15px;
+      padding: 10px;
+      width: 150px;
+      height: 240px;
+      text-align: center;
+      box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.1);
+      transition: transform 0.2s;
+    }
+    .card:hover {
+      transform: scale(1.05);
+    }
+    .card img {
+      width: 100px;
+      height: 100px;
+      margin-bottom: 10px;
+      border-radius: 10px;
+    }
+    .card button {
+      background: #ff80ab;
+      border: none;
+      border-radius: 10px;
+      padding: 5px 10px;
+      cursor: pointer;
+      color: white;
+      font-weight: bold;
+      margin-top: 10px;
+    }
+    .card button:hover {
+      background: #ff4081;
+    }
+    a {
+      display: block;
+      margin-top: 30px;
+      text-decoration: none;
+      color: #ff4081;
+      font-size: 1.2rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🖼️ Learn Hebrew Words</h1>
+    <h2>לומדים עברית ביחד</h2>
+    <div class="cards" id="words-container"></div>
+    <a href="index.html">🔙 Back to Home</a>
+  </div>
+  <script>
+    const apiKey = 'AIzaSyDJNZBPUfMG_mXeO5RunzITWd3fdMhJGNI';
+    const cseId = '65c095e29196a4edc';
+
+    const words = [
+      { hebrew: "אבא", english: "Father" },
+      { hebrew: "אמא", english: "Mother" },
+      { hebrew: "תפוח", english: "Apple" },
+      { hebrew: "ספר", english: "Book" },
+      { hebrew: "חתול", english: "Cat" },
+      { hebrew: "כיסא", english: "Chair" },
+      { hebrew: "כלב", english: "Dog" },
+      { hebrew: "שמש", english: "Sun" },
+      { hebrew: "מים", english: "Water" },
+      { hebrew: "עץ", english: "Tree" },
+      { hebrew: "אור", english: "Light" },
+      { hebrew: "בית", english: "House" },
+      { hebrew: "שמיים", english: "Sky" },
+      { hebrew: "דג", english: "Fish" },
+      { hebrew: "פרח", english: "Flower" },
+      { hebrew: "אבן", english: "Stone" },
+      { hebrew: "אש", english: "Fire" },
+      { hebrew: "קרח", english: "Ice" },
+      { hebrew: "אדמה", english: "Earth" },
+      { hebrew: "כדור", english: "Ball" },
+      { hebrew: "מיטה", english: "Bed" },
+      { hebrew: "שולחן", english: "Table" },
+      { hebrew: "מחשב", english: "Computer" },
+      { hebrew: "טלפון", english: "Phone" },
+      { hebrew: "חלון", english: "Window" },
+      { hebrew: "דלת", english: "Door" },
+      { hebrew: "רכב", english: "Car" },
+      { hebrew: "מטוס", english: "Plane" },
+      { hebrew: "עיפרון", english: "Pencil" },
+      { hebrew: "נייר", english: "Paper" },
+      { hebrew: "צבע", english: "Color" },
+      { hebrew: "ילד", english: "Boy" },
+      { hebrew: "ילדה", english: "Girl" },
+      { hebrew: "חבר", english: "Friend" },
+      { hebrew: "אחות", english: "Sister" },
+      { hebrew: "אח", english: "Brother" },
+      { hebrew: "זמן", english: "Time" },
+      { hebrew: "מוזיקה", english: "Music" },
+      { hebrew: "ים", english: "Sea" },
+      { hebrew: "הר", english: "Mountain" },
+      { hebrew: "יער", english: "Forest" },
+      { hebrew: "שפה", english: "Language" },
+      { hebrew: "עיר", english: "City" },
+      { hebrew: "כפר", english: "Village" },
+      { hebrew: "דרך", english: "Road" },
+      { hebrew: "מפה", english: "Map" },
+      { hebrew: "תמונה", english: "Picture" },
+      { hebrew: "מוזיאון", english: "Museum" },
+      { hebrew: "ספריה", english: "Library" },
+      { hebrew: "שוק", english: "Market" },
+      { hebrew: "חנות", english: "Shop" },
+      { hebrew: "תקרה", english: "Ceiling" },
+      { hebrew: "רצפה", english: "Floor" },
+      { hebrew: "מטבח", english: "Kitchen" },
+      { hebrew: "מקרר", english: "Fridge" },
+      { hebrew: "סכין", english: "Knife" },
+      { hebrew: "מזלג", english: "Fork" },
+      { hebrew: "כפית", english: "Spoon" },
+      { hebrew: "צלחת", english: "Plate" },
+      { hebrew: "כוס", english: "Glass" },
+      { hebrew: "שעון", english: "Clock" },
+      { hebrew: "מראה", english: "Mirror" },
+      { hebrew: "מנורה", english: "Lamp" },
+      { hebrew: "גג", english: "Roof" },
+      { hebrew: "כביש", english: "Highway" },
+      { hebrew: "מעלית", english: "Elevator" },
+      { hebrew: "מדרגות", english: "Stairs" },
+      { hebrew: "פארק", english: "Park" },
+      { hebrew: "גינה", english: "Garden" },
+      { hebrew: "חוף", english: "Beach" },
+      { hebrew: "גן", english: "Kindergarten" },
+      { hebrew: "דשא", english: "Grass" },
+      { hebrew: "חול", english: "Sand" },
+      { hebrew: "שדה", english: "Field" },
+      { hebrew: "גשר", english: "Bridge" },
+      { hebrew: "כביש", english: "Road" },
+      { hebrew: "מכונית", english: "Vehicle" },
+      { hebrew: "גלגל", english: "Wheel" },
+      { hebrew: "אופניים", english: "Bicycle" },
+      { hebrew: "תאורה", english: "Lighting" },
+      { hebrew: "פנס", english: "Lantern" },
+      { hebrew: "צל", english: "Shadow" },
+      { hebrew: "אוויר", english: "Air" },
+      { hebrew: "ענן", english: "Cloud" },
+      { hebrew: "רוח", english: "Wind" },
+      { hebrew: "גשם", english: "Rain" },
+      { hebrew: "שלג", english: "Snow" },
+      { hebrew: "ערפל", english: "Fog" },
+      { hebrew: "ברק", english: "Lightning" },
+      { hebrew: "רעם", english: "Thunder" },
+      { hebrew: "כוכב", english: "Star" },
+      { hebrew: "ירח", english: "Moon" },
+      { hebrew: "שמים", english: "Sky" }
+    ];
+
+    const fetchImage = async (query) => {
+      const response = await fetch(`https://www.googleapis.com/customsearch/v1?q=${query}&cx=${cseId}&key=${apiKey}&searchType=image&num=1`);
+      const data = await response.json();
+      return data.items[0].link;
+    };
+
+    const loadWords = async () => {
+      const container = document.getElementById("words-container");
+      for (const { hebrew, english } of words) {
+        const imageUrl = await fetchImage(english);
+        const card = document.createElement("div");
+        card.className = "card";
+        card.innerHTML = `
+          <img src="${imageUrl}" alt="${english}">
+          <p><strong>${hebrew}</strong></p>
+          <p>${english}</p>
+          <button onclick="playSound('${hebrew}')">🔊 Hear</button>
+        `;
+        container.appendChild(card);
+      }
+    };
+
+    const playSound = (text) => {
+      const url = `https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&q=${encodeURIComponent(text)}&tl=iw`;
+      const audio = new Audio(url);
+      audio.play();
+    };
+
+    document.addEventListener("DOMContentLoaded", loadWords);
+  </script>
+</body>
+</html>
